@@ -19,9 +19,9 @@ public class AI : MonoBehaviour
     void Update()
     {
         _agent.SetDestination(_target.position);
-        Debug.Log(_agent.remainingDistance);
+        //Debug.Log(_agent.remainingDistance);
 
-        //Instantiate(_nextPointObject, _agent.nextPosition, transform.rotation);
+        Instantiate(_nextPointObject, _agent.nextPosition, transform.rotation);
 
     }
 }

@@ -7,21 +7,37 @@ using UnityEngine.AI;
 public class AI : MonoBehaviour
 {
     private NavMeshAgent _agent;
-    [SerializeField] private Transform _target;
+
+    [SerializeField] private GameObject[] _target;
     [SerializeField] private GameObject _nextPointObject;
 
+    LightStateManager _lsmanager;
 
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _lsmanager = new LightStateManager();
     }
 
     void Update()
     {
-        _agent.SetDestination(_target.position);
-        //Debug.Log(_agent.remainingDistance);
 
-        Instantiate(_nextPointObject, _agent.nextPosition, transform.rotation);
+        foreach(GameObject lights in _target)
+        {
+            if (lights.GetComponentInChildren<LightStateManager>().visited == false)
+            {
+                _agent.SetDestination(lights.transform.position);
+
+                //Debug.Log(_target[0].GetComponentInChildren<LightStateManager>().visited);
+
+            }
+        }
+        
+
+
+        
+
+        //Instantiate(_nextPointObject, _agent.nextPosition, transform.rotation);
 
     }
 }

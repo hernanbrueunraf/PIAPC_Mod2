@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class AI : MonoBehaviour
 {
     private NavMeshAgent _agent;
     private Transform _player;
+    private string _targetName;
 
     [SerializeField] private GameObject[] _target;
     [SerializeField] private GameObject _nextPointObject;
 
     LightStateManager _lsmanager;
+
+    [SerializeField] TMPro.TextMeshProUGUI _flText;
 
     void Start()
     {
@@ -31,7 +35,7 @@ public class AI : MonoBehaviour
 
 
                 FuzzyLogic(lights.transform, _player);
-
+                _targetName = lights.name;
             }
         }
         
@@ -49,12 +53,28 @@ public class AI : MonoBehaviour
 
         //Debug.Log(distance);
 
-        if(distance >= 60) Debug.Log("lejos!");
-        if(distance < 60 && distance >= 45) Debug.Log("acercándose..");
-        if(distance < 45 && distance >= 25) Debug.Log("llegando..");
-        if(distance < 25 && distance >= 10) Debug.Log("cerca..");
-        if(distance < 10 && distance >= 0) Debug.Log("llegué..");
+        if(distance >= 40)
+        {
+            _flText.text = _targetName + " lejos!";
+        } 
+        if(distance < 45 && distance >= 30)
+        {
+            _flText.text = _targetName + " menos lejos..";
+        }
+        if(distance < 30 && distance >= 25)
+        {
+            _flText.text = _targetName + " cerca..";
+        }
+        if(distance < 25 && distance >= 20)
+        {
+            _flText.text = _targetName + " mas cerca..";
+        }
+        if(distance < 20 && distance >= 0)
+        {
+            _flText.text = _targetName + " llegué..";
+        }
 
 
     }
+
 }
